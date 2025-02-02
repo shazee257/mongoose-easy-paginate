@@ -1,0 +1,32 @@
+{
+  "name": "mongoose-easy-paginate",
+  "version": "0.0.1",
+  "description": "Mongoose pagination implementation with TypeScript support",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "url": "https://github.com/shazee257/mongoose-easy-paginate"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [
+    "mongoose pagination",
+    "mongoose paginate",
+    "mongoose pagination package",
+    "mongoose pagination typescript",
+    "mongoose pagination mongoose",
+    "mongoose pagination mongoose typescript"
+  ],
+  "author": "shazee257@gmail.com",
+  "license": "ISC",
+  "peerDependencies": {
+    "mongoose": ">=6.0.0"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.96",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5"
+  }
+}
