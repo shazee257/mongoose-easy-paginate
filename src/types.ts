@@ -1,4 +1,4 @@
-import {  PopulateOptions } from 'mongoose';
+import { PipelineStage, PopulateOptions } from 'mongoose';
 
 export interface PaginateOptions {
     model: any;
@@ -8,6 +8,13 @@ export interface PaginateOptions {
     sort?: Record<string, 1 | -1>;
     select?: string | Record<string, 1 | 0>;
     populate?: string | string[] | PopulateOptions | PopulateOptions[];
+}
+
+export interface AggregatedPaginateOptions {
+    model: any;
+    query?: PipelineStage[];
+    page?: number;
+    limit?: number;
 }
 
 export interface PaginateResult<T> {
