@@ -25,11 +25,11 @@ yarn add mongoose-easy-paginate
 ### Standard Pagination
 
 ```typescript
-import { getPaginatedData } from 'mongoose-easy-paginate';
-import UserModel from './models/User';
+import { getPaginatedData, PaginateOptions } from 'mongoose-easy-paginate';
+import UserModel, { UserDocument } from './models/User';
 
 async function fetchUsers() {
-    const result = await getPaginatedData({
+  const getPaginatedOptions: PaginateOptions<UserDocument> = { 
         model: UserModel,
         query: { role: 'user' },
         page: 1,
@@ -37,28 +37,31 @@ async function fetchUsers() {
         sort: { createdAt: -1 },
         select: '-password',
         populate: 'profile'
-    });
-    console.log(result);
+     };
+
+  const users = await getPaginatedData(getPaginatedOptions);
+  return users;
 }
 ```
 
 ### Aggregation-Based Pagination
 
 ```typescript
-import { getAggregatedPaginatedData } from 'mongoose-easy-paginate';
-import OrderModel from './models/Order';
+import { getAggregatedPaginatedData, AggregatedPaginateOptions } from 'mongoose-easy-paginate';
+import OrderModel, { OrderDocument } from './models/Order';
 
 async function fetchOrders() {
-    const result = await getAggregatedPaginatedData({
-        model: OrderModel,
-        query: [
-            { $match: { status: 'completed' } },
-            { $sort: { createdAt: -1 } }
-        ],
-        page: 1,
-        limit: 10
-    });
-    console.log(result);
+  const getAggregatedOptions: AggregatedPaginateOptions<OrderDocument> = { 
+    model: OrderModel,
+    query: [
+      { $match: { status: 'completed' } },
+      { $sort: { createdAt: -1 } }
+    ],
+    page: 1,
+    limit: 10
+  };
+  const orders = await getAggregatedPaginatedData(getAggregatedOptions);
+  return orders;
 }
 ```
 
