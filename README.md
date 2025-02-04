@@ -62,12 +62,6 @@ async function fetchOrders() {
 }
 ```
 
-## API Reference
-
-```typescript
-getPaginatedData<T>(options: PaginateOptions<T>): Promise<PaginateResult<T>>
-```
-
 ### Parameters
 
 - `model`     (Mongoose Model) - The Mongoose model to query
@@ -106,6 +100,8 @@ The paginate method returns a promise that resolves to:
 | limit | number | 10 | Number of items per page |
 | sort | Record<string, 1 \| -1> | {} | MongoDB sort options |
 | select | string \| Record<string, 1 \| 0> | {} | Fields to include/exclude |
+| populate | string \| Record<string, 1 \| 0> | {} | Fields to populate |
+| query | Object \| Array<PipelineStage> | {} | MongoDB query object or aggregation pipeline stages |
 
 ## Requirements
 
