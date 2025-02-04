@@ -14,37 +14,69 @@ yarn add mongoose-easy-paginate
 
 ## Features
 
-- 🚀 Simple and intuitive API
+- 🚀 Simple and easy-to-use pagination functions.
+- 🔄 Supports sorting and field selection, populate options
 - 📦 Lightweight implementation
 - 💪 Full TypeScript support
-- 🔧 Customizable pagination options
-- 🔄 Supports sorting and field selection
+- 🔄 Also added id field as replica of _id in each document
 
 ## Usage
 
-### 1. Apply the Plugin to Your Schema
-
-```ts
-import mongoose from 'mongoose';
-import paginate from 'mongoose-easy-paginate';
-
-mongoose.plugin(paginate);
-```
-
-### 2. Use the Paginate Method
+### Standard Pagination
 
 ```typescript
-const User = mongoose.model('User', new mongoose.Schema({ name: String }));
+import { getPaginatedData } from 'mongoose-easy-paginate';
+import UserModel from './models/User';
 
-const users = await User.paginate({});
+async function fetchUsers() {
+    const result = await getPaginatedData({
+        model: UserModel,
+        query: { role: 'user' },
+        page: 1,
+        limit: 10,
+        sort: { createdAt: -1 },
+        select: '-password',
+        populate: 'profile'
+    });
+    console.log(result);
+}
 ```
 
-### 3. Customize Pagination Options & Access Pagination Data
+### Aggregation-Based Pagination
 
-```ts
-const users = await User.paginate({}, { page: 2, limit: 10, sort: { name: 1 } });
-console.log(users.pagination);
+```typescript
+import { getAggregatedPaginatedData } from 'mongoose-easy-paginate';
+import OrderModel from './models/Order';
+
+async function fetchOrders() {
+    const result = await getAggregatedPaginatedData({
+        model: OrderModel,
+        query: [
+            { $match: { status: 'completed' } },
+            { $sort: { createdAt: -1 } }
+        ],
+        page: 1,
+        limit: 10
+    });
+    console.log(result);
+}
 ```
+
+## API Reference
+
+```typescript
+getPaginatedData<T>(options: PaginateOptions<T>): Promise<PaginateResult<T>>
+```
+
+### Parameters
+
+- `model`     (Mongoose Model) - The Mongoose model to query
+- `query`     (Object) - Optional query filter
+- `page`      (Number) - Current page number (default: 1)
+- `limit`     (Number) - Number of items per page (default: 10)
+- `sort`      (Object) - Sorting criteria (default: { createdAt: -1 })
+- `select`    (String | Object) - Fields to select (default: -password).
+- `populate`  (String | Object | Array) - Fields to populate.
 
 ## Response Format
 
@@ -82,7 +114,7 @@ The paginate method returns a promise that resolves to:
 
 ## License
 
-ISC
+- MIT
 
 ## Author
 
