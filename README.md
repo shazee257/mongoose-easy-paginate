@@ -20,6 +20,7 @@ yarn add mongoose-easy-paginate
 - 💪 Full TypeScript support
 - 🔄 Also added id field as replica of _id in each document
 
+
 ## Usage
 
 ### Standard Pagination
@@ -65,7 +66,7 @@ async function fetchOrders() {
 }
 ```
 
-### Parameters
+## Parameters
 
 - `model`     (Mongoose Model) - The Mongoose model to query
 - `query`     (Object) - Optional query filter
