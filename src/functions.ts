@@ -23,11 +23,15 @@ export async function getPaginationData({
         model.countDocuments(query)
     ]);
 
+    let data = [];
+
     // Add id field to each document in the data array
-    const data = rawData.map((doc: any) => ({
-        ...doc,
-        id: doc._id.toString(),
-    }));
+    if (rawData.length > 0) {
+        data = rawData.map((doc: any) => ({
+            ...doc,
+            id: doc._id.toString(),
+        }));
+    }
 
     const totalPages = Math.ceil(totalItems / limit);
     const hasNextPage = page < totalPages;
