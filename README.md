@@ -15,9 +15,10 @@ yarn add mongoose-easy-paginate
 ## Features
 
 - 🚀 Simple and easy-to-use pagination functions.
-- 🔄 Supports sorting and field selection, populate options
-- 📦 Lightweight implementation
+- ⚡️ Lightweight implementation
+- 📦 Zero dependencies - only requires mongoose as a peer dependency
 - 💪 Full TypeScript support
+- 🔄 Supports sorting and field selection, populate options
 - 🔄 Also added id field as replica of _id in each document
 
 
