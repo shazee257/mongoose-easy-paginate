@@ -26,13 +26,12 @@ export async function getPaginatedData<T extends Document>({
             model.countDocuments(query)
         ]);
 
-        let data = [];
-
         // Add id field to each document in the data array
+        let data = [];
         if (rawData.length > 0) {
             data = rawData.map((doc: any) => ({
                 ...doc,
-                id: doc._id.toString(),
+                id: doc._id.toString()
             }));
         }
 
@@ -74,7 +73,8 @@ export async function getAggregatedPaginatedData<T extends Document>({
                 $facet: {
                     data: [
                         { $skip: skip },
-                        { $limit: limit }
+                        { $limit: limit },
+                        { $addFields: { id: '$_id' } }
                     ],
                     totalCount: [
                         { $count: 'count' }
@@ -84,10 +84,6 @@ export async function getAggregatedPaginatedData<T extends Document>({
         ];
 
         const [result] = await model.aggregate(aggregationPipeline);
-        const data = result.data.map((doc: any) => ({
-            ...doc,
-            id: doc._id.toString(),
-        }));
 
         const totalItems = result.totalCount[0]?.count || 0;
         const totalPages = Math.ceil(totalItems / limit);
@@ -95,7 +91,7 @@ export async function getAggregatedPaginatedData<T extends Document>({
         const hasPrevPage = page > 1;
 
         return {
-            data,
+            data: result.data,
             pagination: {
                 totalItems,
                 perPage: limit,
